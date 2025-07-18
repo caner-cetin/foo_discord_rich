@@ -46,6 +46,7 @@ PresenceData::PresenceData()
 {
     memset( &presence, 0, sizeof( presence ) );
     presence.activityType = DiscordActivityType::LISTENING;
+    presence.status_display_type = 1;
     UpdateTextFieldPointers();
 }
 
@@ -99,6 +100,7 @@ void PresenceData::CopyData( const PresenceData& other )
     memcpy( &presence, &other.presence, sizeof( presence ) );
     UpdateTextFieldPointers();
     presence.activityType = DiscordActivityType::LISTENING;
+    presence.status_display_type = 1;
     presence.largeImageKey = ( largeImageKey.empty() ? nullptr : largeImageKey.c_str() );
     presence.smallImageKey = ( smallImageKey.empty() ? nullptr : smallImageKey.c_str() );
 }

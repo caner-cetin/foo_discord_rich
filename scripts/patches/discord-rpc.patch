@@ -14,7 +14,7 @@ diff --git a/submodules/discord-rpc/include/discord_rpc.h b/submodules/discord-r
 index 9470434..20f29bc 100644
 --- a/submodules/discord-rpc/include/discord_rpc.h
 +++ b/submodules/discord-rpc/include/discord_rpc.h
-@@ -23,7 +23,17 @@
+@@ -23,7 +23,18 @@
  extern "C" {
  #endif
  
@@ -29,6 +29,7 @@ index 9470434..20f29bc 100644
 +
  typedef struct DiscordRichPresence {
 +    DiscordActivityType activityType;
++    int status_display_type;
      const char* state;   /* max 128 bytes */
      const char* details; /* max 128 bytes */
      int64_t startTimestamp;
@@ -36,13 +37,16 @@ diff --git a/submodules/discord-rpc/src/serialization.cpp b/submodules/discord-r
 index 70efa63..e822dfc 100644
 --- a/submodules/discord-rpc/src/serialization.cpp
 +++ b/submodules/discord-rpc/src/serialization.cpp
-@@ -104,6 +104,9 @@ size_t JsonWriteRichPresenceObj(char* dest,
+@@ -104,6 +104,12 @@ size_t JsonWriteRichPresenceObj(char* dest,
  
              if (presence != nullptr) {
                  WriteObject activity(writer, "activity");
 +
 +                WriteKey(writer, "type");
 +                writer.Int(presence->activityType);
++
++                WriteKey(writer, "status_display_type");
++                writer.Int(presence->status_display_type);
  
                  WriteOptionalString(writer, "state", presence->state);
                  WriteOptionalString(writer, "details", presence->details);
